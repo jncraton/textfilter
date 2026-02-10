@@ -1,4 +1,4 @@
-SOURCES = faulkner.epub constitution.html gruber.html npr.html
+SOURCES = gruber.html npr.html constitution.html faulkner.epub
 
 all: $(SOURCES)
 
