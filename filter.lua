@@ -64,10 +64,9 @@ function Para(el)
 
   local last = inls[#inls]
 
-  if last.t == "Str" then
-    local s = last.text
-    if s:match("%.$") then
-      last.text = s:sub(1, -2)
+  if last.t == 'Str' then
+    if last.text:sub(-1) == '.' then
+      last.text = last.text:sub(1, -2)
       inls[#inls] = last
     end
   end
