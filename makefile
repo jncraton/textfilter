@@ -1,4 +1,4 @@
-SOURCES = faulkner.epub constitution.html gruber.html
+SOURCES = faulkner.epub constitution.html gruber.html npr.html
 
 all: $(SOURCES)
 
@@ -10,6 +10,9 @@ constitution.html:
 
 gruber.html:
 	curl -fSL 'https://daringfireball.net/projects/markdown/' -o $@
+
+npr.html:
+	curl -fSL 'https://text.npr.org/g-s1-108985' -o $@
 
 bench: $(SOURCES)
 	uv run python3 bench.py $(SOURCES)
