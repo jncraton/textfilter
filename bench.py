@@ -36,7 +36,7 @@ def main():
     total_filtered_nowrap = 0
 
     with open("bench.tsv", "w", encoding="utf-8") as f:
-        f.write("file\tgeneric\tnowrap\tfiltered_wrap\tfiltered_nowrap\timprovement\n")
+        f.write("file\tgeneric\tnowrap\tfiltered_wrap\tfiltered_nowrap\n")
 
         for filename in filenames:
             generic_text = run_pandoc(filename, use_filter=False)
@@ -60,19 +60,24 @@ def main():
             total_filtered_wrap += filtered_wrap_tokens
             total_filtered_nowrap += filtered_nowrap_tokens
 
-            improvement = (
-                (generic_tokens - filtered_nowrap_tokens) / generic_tokens * 100
+            row = (
+                f"{filename}\t"
+                f"{generic_tokens}\t"
+                f"{nowrap_tokens/generic_tokens*100:.2f}%\t"
+                f"{filtered_wrap_tokens/generic_tokens*100:.2f}%\t"
+                f"{filtered_nowrap_tokens/generic_tokens*100:.2f}%\n"
             )
-
-            row = f"{filename}\t{generic_tokens}\t{nowrap_tokens}\t{filtered_wrap_tokens}\t{filtered_nowrap_tokens}\t{improvement:.2f}%\n"
             f.write(row)
             sys.stdout.write(row)
 
         if total_generic > 0:
-            total_improvement = (
-                (total_generic - total_filtered_nowrap) / total_generic * 100
+            agg_row = (
+                f"Total\t"
+                f"{total_generic}\t"
+                f"{total_nowrap/total_generic*100:.2f}%\t"
+                f"{total_filtered_wrap/total_generic*100:.2f}%\t"
+                f"{total_filtered_nowrap/total_generic*100:.2f}%\n"
             )
-            agg_row = f"Total\t{total_generic}\t{total_nowrap}\t{total_filtered_wrap}\t{total_filtered_nowrap}\t{total_improvement:.2f}%\n"
             f.write(agg_row)
             sys.stdout.write(agg_row)
 
