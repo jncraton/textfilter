@@ -13,4 +13,5 @@ bench: $(SOURCES)
 
 clean:
 	rm -f $(SOURCES)
+	rm -f *-unfiltered.md *-filtered.md
 	rm -rf .venv venv uv.lock
