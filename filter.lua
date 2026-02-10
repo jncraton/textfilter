@@ -54,7 +54,12 @@ function Header(el)
 end
 
 function Link(el)
-  return remove_attrs(el)
+  for _, v in ipairs(el.content) do
+    if v.t ~= 'Image' then
+      return remove_attrs(el)
+    end
+  end
+  return {}
 end
 
 function Code(el)
