@@ -24,20 +24,40 @@ def main():
     if len(sys.argv) < 2:
         sys.exit(1)
 
-    filename = sys.argv[1]
+    filenames = sys.argv[1:]
     tokenizer = load_tokenizer()
 
-    generic_text = run_pandoc(filename, use_filter=False)
-    filtered_text = run_pandoc(filename, use_filter=True)
+    total_generic = 0
+    total_filtered = 0
 
-    generic_tokens = count_tokens(generic_text, tokenizer)
-    filtered_tokens = count_tokens(filtered_text, tokenizer)
+    with open("bench.tsv", "w", encoding="utf-8") as f:
+        f.write("file\tgeneric\tfiltered\timprovement\n")
 
-    improvement = (generic_tokens - filtered_tokens) / generic_tokens * 100
+        for filename in filenames:
+            generic_text = run_pandoc(filename, use_filter=False)
+            filtered_text = run_pandoc(filename, use_filter=True)
 
-    print(f"Generic: {generic_tokens}")
-    print(f"Filtered: {filtered_tokens}")
-    print(f"Improvement: {improvement:.2f}%")
+            generic_tokens = count_tokens(generic_text, tokenizer)
+            filtered_tokens = count_tokens(filtered_text, tokenizer)
+
+            total_generic += generic_tokens
+            total_filtered += filtered_tokens
+
+            improvement = (generic_tokens - filtered_tokens) / generic_tokens * 100
+
+            row = f"{filename}\t{generic_tokens}\t{filtered_tokens}\t{improvement:.2f}%\n"
+            f.write(row)
+            sys.stdout.write(row)
+
+        if total_generic > 0:
+            total_improvement = (
+                (total_generic - total_filtered) / total_generic * 100
+            )
+            agg_row = (
+                f"Total\t{total_generic}\t{total_filtered}\t{total_improvement:.2f}%\n"
+            )
+            f.write(agg_row)
+            sys.stdout.write(agg_row)
 
 
 if __name__ == "__main__":
