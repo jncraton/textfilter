@@ -44,11 +44,16 @@ def main():
             filtered_wrap_text = run_pandoc(filename, use_filter=True, wrap="auto")
             filtered_nowrap_text = run_pandoc(filename, use_filter=True, wrap="none")
 
-            with open(f"{filename}-unfiltered.md", "w", encoding="utf-8") as f_out:
-                f_out.write(generic_text)
+            outputs = {
+                "generic": generic_text,
+                "nowrap": nowrap_text,
+                "filtered_wrap": filtered_wrap_text,
+                "filtered_nowrap": filtered_nowrap_text,
+            }
 
-            with open(f"{filename}-filtered.md", "w", encoding="utf-8") as f_out:
-                f_out.write(filtered_nowrap_text)
+            for suffix, text in outputs.items():
+                with open(f"{filename}-{suffix}.md", "w", encoding="utf-8") as f_out:
+                    f_out.write(text)
 
             generic_tokens = count_tokens(generic_text, tokenizer)
             nowrap_tokens = count_tokens(nowrap_text, tokenizer)

@@ -13,5 +13,5 @@ bench: $(SOURCES)
 
 clean:
 	rm -f $(SOURCES)
-	rm -f *-unfiltered.md *-filtered.md
+	rm -f *-generic.md *-nowrap.md *-filtered_wrap.md *-filtered_nowrap.md
 	rm -rf .venv venv uv.lock
