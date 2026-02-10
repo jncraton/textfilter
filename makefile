@@ -1,4 +1,4 @@
-SOURCES = faulkner.epub constitution.html
+SOURCES = faulkner.epub constitution.html gruber.html
 
 all: $(SOURCES)
 
@@ -7,6 +7,9 @@ faulkner.epub:
 
 constitution.html:
 	curl -fSL 'https://constitutioncenter.org/the-constitution/full-text' -o $@
+
+gruber.html:
+	curl -fSL 'https://daringfireball.net/projects/markdown/' -o $@
 
 bench: $(SOURCES)
 	uv run python3 bench.py $(SOURCES)
