@@ -53,6 +53,11 @@ function Code(el)
   return remove_attrs(el)
 end
 
+function Str(el)
+  el.text = el.text:gsub('\u{a0}+', ' ')
+  return el
+end
+
 function CodeBlock(el)
   return remove_attrs(el)
 end
