@@ -25,6 +25,10 @@ function Span(el)
   return el.content
 end
 
+function SoftBreak()
+  return pandoc.Space()
+end
+
 function Div(el)
   return el.content
 end

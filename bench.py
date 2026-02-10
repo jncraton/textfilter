@@ -15,7 +15,7 @@ def count_tokens(text, tokenizer):
 
 
 def run_pandoc(input_file, use_filter=False):
-    cmd = ["pandoc", "-t", "markdown", input_file]
+    cmd = ["pandoc", "-t", "markdown", "--wrap=none", input_file]
     if use_filter:
         cmd.extend(["--lua-filter", "filter.lua"])
 

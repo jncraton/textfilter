@@ -5,7 +5,7 @@
 ## Usage
 
 ```sh
-pandoc input.epub --lua-filter=filter.lua -o output.md
+pandoc input.epub --lua-filter=filter.lua --wrap=none -o output.md
 ```
 
 ## Benchmarks
