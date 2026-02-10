@@ -5,4 +5,4 @@ faulkner.epub:
 
 clean:
 	rm -f faulkner.epub
-	rm -rf .venv venv
+	rm -rf .venv venv uv.lock
