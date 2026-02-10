@@ -4,7 +4,10 @@ from tokenizers import Tokenizer
 
 
 def load_tokenizer():
-    return Tokenizer.from_pretrained("jncraton/gemma-3-270m-ct2-int8")
+    return Tokenizer.from_pretrained(
+        "jncraton/gemma-3-270m-ct2-int8",
+        revision="4cbd19d0c1e4c4375ac9bd9c5d6c586ada6a60c9",
+    )
 
 
 def count_tokens(text, tokenizer):
