@@ -2,6 +2,9 @@ local function remove_attrs(el)
   if el.attr then
     el.attr = pandoc.Attr()
   end
+  if el.title then
+    el.title = ''
+  end
   return el
 end
 
