@@ -1,9 +1,8 @@
-function Image (el)
-  return {}
-end
-
-function Figure (el)
-  return {}
+local function remove_attrs(el)
+  if el.attr then
+    el.attr = pandoc.Attr()
+  end
+  return el
 end
 
 function RawBlock(el)
@@ -14,36 +13,35 @@ function RawInline(el)
   return {}
 end
 
-function Cite(el)
+function Image(el)
   return {}
+end
+
+function Figure(el)
+  return {}
+end
+
+function Span(el)
+  return el.content
+end
+
+function Div(el)
+  return el.content
 end
 
 function Note(el)
   return {}
 end
 
-function Span (el)
-  if #el.content == 0 then
-    return {}
-  end
-end
-
-function Div (el)
-  if #el.content == 0 then
-    return {}
-  end
-
-  return el.content
-end
-
-function remove_attrs(el)
-  if el.attr then
-    el.attr = {}
-  end
-  return el
+function Cite(el)
+  return {}
 end
 
 function Header(el)
+  return remove_attrs(el)
+end
+
+function Link(el)
   return remove_attrs(el)
 end
 
@@ -56,7 +54,7 @@ function CodeBlock(el)
 end
 
 function Para(el)
-  -- Remove trailing period on paragraphs
+  remove_attrs(el)
   local inls = el.content
   if #inls == 0 then
     return nil
@@ -71,5 +69,25 @@ function Para(el)
     end
   end
 
-  return pandoc.Para(inls)
+  return el
+end
+
+function Plain(el)
+  return remove_attrs(el)
+end
+
+function BulletList(el)
+  return remove_attrs(el)
+end
+
+function OrderedList(el)
+  return remove_attrs(el)
+end
+
+function DefinitionList(el)
+  return remove_attrs(el)
+end
+
+function Table(el)
+  return remove_attrs(el)
 end
